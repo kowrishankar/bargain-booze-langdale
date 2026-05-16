@@ -1,28 +1,20 @@
-import { PrismaPg } from "@prisma/adapter-pg";
-import { Pool } from "pg";
+import { PrismaNeon } from "@prisma/adapter-neon";
+import { neonConfig } from "@neondatabase/serverless";
+import ws from "ws";
 import { PrismaClient } from "@/generated/prisma/client";
 import { getDatabaseUrl } from "@/lib/db-url";
 
+// WebSocket driver for Neon in Node.js (Next.js server / scripts)
+neonConfig.webSocketConstructor = ws;
+
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
-  pool: Pool | undefined;
 };
 
-function createPool() {
-  return new Pool({
-    connectionString: getDatabaseUrl(),
-    ssl: { rejectUnauthorized: false },
-    connectionTimeoutMillis: 15_000,
-    idleTimeoutMillis: 10_000,
-  });
-}
-
 function createPrismaClient() {
-  const pool = globalForPrisma.pool ?? createPool();
-  if (process.env.NODE_ENV !== "production") globalForPrisma.pool = pool;
-
+  const adapter = new PrismaNeon({ connectionString: getDatabaseUrl() });
   return new PrismaClient({
-    adapter: new PrismaPg(pool),
+    adapter,
     log: process.env.NODE_ENV === "development" ? ["error", "warn"] : ["error"],
   });
 }
