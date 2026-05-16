@@ -8,9 +8,36 @@ import { getDatabaseUrl } from "../src/lib/db-url";
 const pool = new Pool({
   connectionString: getDatabaseUrl(),
   ssl: { rejectUnauthorized: false },
-  connectionTimeoutMillis: 30_000,
+  connectionTimeoutMillis: 60_000,
+  max: 1,
 });
 const prisma = new PrismaClient({ adapter: new PrismaPg(pool) });
+
+function dbHost(): string {
+  try {
+    return new URL(getDatabaseUrl().replace(/^postgresql:/, "http:")).hostname;
+  } catch {
+    return "(invalid DATABASE_URL)";
+  }
+}
+
+async function assertDatabaseReachable() {
+  try {
+    await pool.query("SELECT 1");
+  } catch {
+    console.error(`
+Cannot connect to Postgres at: ${dbHost()}
+
+Common fixes:
+  1. Copy a fresh pooled connection string from https://console.neon.tech
+     (project: bargain-booze-langdale) into .env as DATABASE_URL
+  2. Remove channel_binding from the URL if present
+  3. Ensure the Neon project is not deleted (old hosts like ep-raspy-rice-* will time out)
+  4. If you are on a restricted network, try another connection or seed via Neon SQL editor
+`);
+    throw new Error("Database connection failed");
+  }
+}
 
 const LU6_POSTCODES = [
   { postcode: "LU63BS", area: "Langdale Rd, Dunstable" },
@@ -89,7 +116,8 @@ const PRODUCTS = [
 ];
 
 async function main() {
-  console.log("Connecting to database…");
+  console.log(`Connecting to ${dbHost()}…`);
+  await assertDatabaseReachable();
 
   const adminHash = await bcrypt.hash("Admin123!", 12);
 
