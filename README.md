@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Bargain Booze — Langdale Road, Dunstable
 
-## Getting Started
+Mobile-friendly online shop for **Bargain Booze** at 62 Langdale Rd, Dunstable LU6 3BS.
 
-First, run the development server:
+## Features
+
+- **Customers:** browse products, register/login, basket, checkout (Stripe or demo mode), collection or local delivery, order tracking with status updates
+- **Delivery:** postcode validation against an allowed local list (LU6 area)
+- **Promotions:** BOGOF, 2-for price, 3-for price
+- **Admin:** manage products, promotions, delivery postcodes, and order fulfilment statuses
+
+## Quick start
 
 ```bash
+npm install
+npm run db:migrate
+npm run db:seed
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Demo accounts (after seed)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Role     | Email                                   | Password    |
+|----------|-----------------------------------------|-------------|
+| Admin    | admin@bargainbooze-langdale.co.uk       | Admin123!   |
 
-## Learn More
+Create a customer account via **Register**.
 
-To learn more about Next.js, take a look at the following resources:
+### Stripe payments
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Copy `.env.example` to `.env` and add Stripe keys.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Delivery:** must be paid online via Stripe before the order is confirmed.
+- **Collection:** customer can **pay in store when collecting** or **pay online** via Stripe.
 
-## Deploy on Vercel
+Without Stripe configured, collection orders can still be placed (pay in store only); delivery checkout is disabled.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+For webhooks locally:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+stripe listen --forward-to localhost:3000/api/webhooks/stripe
+```
+
+## Tech stack
+
+- Next.js 16 (App Router), TypeScript, Tailwind CSS
+- Prisma + SQLite (swap `DATABASE_URL` for PostgreSQL/Neon in production)
+- Auth.js (NextAuth v5) with credentials
+- Stripe Checkout
+
+## Admin
+
+Sign in as admin, then visit [/admin](http://localhost:3000/admin).
+
+Product images can be **uploaded** in Admin → Products (stored in `public/uploads/products/`). External image URLs are still supported as a fallback.
+
+> **Production note:** Local file uploads persist on the server filesystem. For serverless hosting (e.g. Vercel), use object storage (S3, Vercel Blob) instead.
