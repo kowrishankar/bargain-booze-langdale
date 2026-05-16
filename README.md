@@ -14,14 +14,17 @@ Mobile-friendly online shop for **Bargain Booze** at 62 Langdale Rd, Dunstable L
 ```bash
 npm install
 # Set DATABASE_URL in .env to your Postgres connection string (see .env.example)
-npm run db:migrate
-npm run db:seed
+npm run db:setup
 npm run dev
 ```
 
+(`db:setup` runs migrations then seeds admin, postcodes, and 8 sample products.)
+
 **Vercel build command:** `npx prisma migrate deploy && npm run build`
 
-**Vercel env vars (required for login):** `DATABASE_URL`, `AUTH_SECRET` (run `openssl rand -base64 32`). Do not set `AUTH_URL` on Vercel — `trustHost` handles it.
+After the first deploy, run **`npm run db:seed`** locally (with `DATABASE_URL` pointing at production) or seed via the Neon SQL editor so the shop has products and the admin account exists.
+
+**Vercel env vars (required for login):** `DATABASE_URL` (Neon pooled URL, `sslmode=require`; omit `channel_binding`), `AUTH_SECRET` (run `openssl rand -base64 32`). Do not set `AUTH_URL` on Vercel — `trustHost` handles it.
 
 Open [http://localhost:3000](http://localhost:3000)
 
