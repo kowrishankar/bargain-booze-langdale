@@ -13,10 +13,13 @@ Mobile-friendly online shop for **Bargain Booze** at 62 Langdale Rd, Dunstable L
 
 ```bash
 npm install
+# Set DATABASE_URL in .env to your Postgres connection string (see .env.example)
 npm run db:migrate
 npm run db:seed
 npm run dev
 ```
+
+**Vercel build command:** `npx prisma migrate deploy && npm run build`
 
 Open [http://localhost:3000](http://localhost:3000)
 
@@ -46,7 +49,7 @@ stripe listen --forward-to localhost:3000/api/webhooks/stripe
 ## Tech stack
 
 - Next.js 16 (App Router), TypeScript, Tailwind CSS
-- Prisma + SQLite (swap `DATABASE_URL` for PostgreSQL/Neon in production)
+- Prisma + PostgreSQL (Neon recommended)
 - Auth.js (NextAuth v5) with credentials
 - Stripe Checkout
 
