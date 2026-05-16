@@ -6,7 +6,7 @@ export const BRAND = {
 
 export const STORE = {
   name: "Bargain Booze",
-  tagline: "Langdale Corner Shop",
+  tagline: "LANGDALE ROAD",
   address: "62 Langdale Rd",
   city: "Dunstable",
   postcode: "LU6 3BS",
