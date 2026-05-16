@@ -6,7 +6,7 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { normalisePostcode } from "@/lib/postcodes";
-import { deleteLocalProductImage } from "@/lib/product-images";
+import { deleteProductImage } from "@/lib/product-images";
 import type { OrderStatus, PromotionType } from "@/generated/prisma/client";
 
 async function assertAdmin() {
@@ -44,7 +44,7 @@ export async function upsertProduct(data: {
       select: { imageUrl: true },
     });
     if (existing?.imageUrl && existing.imageUrl !== payload.imageUrl) {
-      await deleteLocalProductImage(existing.imageUrl);
+      await deleteProductImage(existing.imageUrl);
     }
     await prisma.product.update({ where: { id: data.id }, data: payload });
   } else {

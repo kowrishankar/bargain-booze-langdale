@@ -62,6 +62,9 @@ stripe listen --forward-to localhost:3000/api/webhooks/stripe
 
 Sign in as admin, then visit [/admin](http://localhost:3000/admin).
 
-Product images can be **uploaded** in Admin → Products (stored in `public/uploads/products/`). External image URLs are still supported as a fallback.
+Product images can be **uploaded** in Admin → Products.
 
-> **Production note:** Local file uploads persist on the server filesystem. For serverless hosting (e.g. Vercel), use object storage (S3, Vercel Blob) instead.
+- **Local dev:** files save to `public/uploads/products/` (no extra config).
+- **Vercel:** create a [Blob store](https://vercel.com/docs/storage/vercel-blob) on the project; `BLOB_READ_WRITE_TOKEN` is added automatically. Redeploy after adding the store.
+
+External image URLs are still supported as a fallback.

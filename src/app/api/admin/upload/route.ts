@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { saveProductImage } from "@/lib/product-images";
 
+export const runtime = "nodejs";
+
 export async function POST(request: Request) {
   const session = await auth();
   if (!session?.user || session.user.role !== "ADMIN") {
