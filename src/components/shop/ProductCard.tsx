@@ -20,7 +20,7 @@ export function ProductCard({ product }: Props) {
             src={product.imageUrl}
             alt={product.name}
             fill
-            className="object-cover"
+            className="object-contain p-3"
             sizes="(max-width:768px) 50vw, 25vw"
           />
         ) : (

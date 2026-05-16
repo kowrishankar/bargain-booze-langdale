@@ -26,7 +26,7 @@ export default async function ProductPage({ params }: Props) {
       <div className="mt-6 grid gap-8 md:grid-cols-2">
         <div className="relative aspect-square overflow-hidden rounded-2xl bg-stone-100">
           {product.imageUrl ? (
-            <Image src={product.imageUrl} alt={product.name} fill className="object-cover" priority />
+            <Image src={product.imageUrl} alt={product.name} fill className="object-contain p-4" priority />
           ) : (
             <div className="flex h-full items-center justify-center text-6xl text-stone-300">🛒</div>
           )}

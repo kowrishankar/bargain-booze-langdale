@@ -41,7 +41,7 @@ export function ProductImageUpload({ value, onChange }: Props) {
 
       {value ? (
         <div className="relative aspect-square max-w-xs overflow-hidden rounded-lg border-2 border-stone-200 bg-stone-50">
-          <Image src={value} alt="Product preview" fill className="object-cover" sizes="320px" />
+          <Image src={value} alt="Product preview" fill className="object-contain p-3" sizes="320px" />
           <button
             type="button"
             onClick={() => onChange("")}
