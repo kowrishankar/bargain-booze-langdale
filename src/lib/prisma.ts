@@ -7,13 +7,25 @@ const globalForPrisma = globalThis as unknown as {
   pool: Pool | undefined;
 };
 
-function createPrismaClient() {
-  const connectionString = process.env.DATABASE_URL;
-  if (!connectionString) {
+/** Normalise Neon URL for serverless (channel_binding can break pg on Vercel). */
+function getDatabaseUrl(): string {
+  const url = process.env.DATABASE_URL;
+  if (!url) {
     throw new Error("DATABASE_URL is not set");
   }
+  return url
+    .replace(/&?channel_binding=[^&]*/gi, "")
+    .replace(/\?&/, "?")
+    .replace(/[?&]$/, "");
+}
 
-  const pool = globalForPrisma.pool ?? new Pool({ connectionString });
+function createPrismaClient() {
+  const pool =
+    globalForPrisma.pool ??
+    new Pool({
+      connectionString: getDatabaseUrl(),
+      ssl: { rejectUnauthorized: false },
+    });
   if (process.env.NODE_ENV !== "production") globalForPrisma.pool = pool;
 
   const adapter = new PrismaPg(pool);

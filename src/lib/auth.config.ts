@@ -3,6 +3,7 @@ import type { Role } from "@/generated/prisma/client";
 
 export const authConfig = {
   trustHost: true,
+  secret: process.env.AUTH_SECRET,
   session: { strategy: "jwt" },
   pages: {
     signIn: "/account/login",
@@ -17,8 +18,8 @@ export const authConfig = {
       return token;
     },
     session({ session, token }) {
-      if (session.user) {
-        session.user.id = token.id as string;
+      if (session.user && token.sub) {
+        session.user.id = (token.id as string) ?? token.sub;
         session.user.role = token.role as Role;
       }
       return session;

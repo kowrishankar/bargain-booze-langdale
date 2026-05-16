@@ -21,6 +21,8 @@ npm run dev
 
 **Vercel build command:** `npx prisma migrate deploy && npm run build`
 
+**Vercel env vars (required for login):** `DATABASE_URL`, `AUTH_SECRET` (run `openssl rand -base64 32`). Do not set `AUTH_URL` on Vercel — `trustHost` handles it.
+
 Open [http://localhost:3000](http://localhost:3000)
 
 ### Demo accounts (after seed)
