@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ShoppingBasket, User, MapPin } from "lucide-react";
 import { auth } from "@/lib/auth";
 import { getCart, cartItemCount } from "@/lib/cart";
+import { SignOutButton } from "@/components/account/SignOutButton";
 import { Logo } from "./Logo";
 import { MobileNav } from "./MobileNav";
 
@@ -40,13 +41,26 @@ export async function Header() {
               </span>
             )}
           </Link>
-          <Link
-            href={session ? "/account/orders" : "/account/login"}
-            className="hidden h-10 items-center gap-1.5 rounded-lg px-3 text-sm font-semibold text-stone-800 transition hover:bg-brand-light hover:text-brand md:flex"
-          >
-            <User className="h-4 w-4" />
-            {session ? "Orders" : "Sign in"}
-          </Link>
+          {session ? (
+            <>
+              <Link
+                href="/account/orders"
+                className="hidden h-10 items-center gap-1.5 rounded-lg px-3 text-sm font-semibold text-stone-800 transition hover:bg-brand-light hover:text-brand md:flex"
+              >
+                <User className="h-4 w-4" />
+                Orders
+              </Link>
+              <SignOutButton className="hidden h-10 items-center rounded-lg px-3 text-sm font-semibold text-stone-600 transition hover:bg-brand-light hover:text-brand md:inline-flex" />
+            </>
+          ) : (
+            <Link
+              href="/account/login"
+              className="hidden h-10 items-center gap-1.5 rounded-lg px-3 text-sm font-semibold text-stone-800 transition hover:bg-brand-light hover:text-brand md:flex"
+            >
+              <User className="h-4 w-4" />
+              Sign in
+            </Link>
+          )}
           <MobileNav session={!!session} cartCount={count} />
         </div>
       </div>

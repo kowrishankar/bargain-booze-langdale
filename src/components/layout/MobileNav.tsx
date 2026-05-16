@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Menu, X, ShoppingBasket, User } from "lucide-react";
+import { SignOutButton } from "@/components/account/SignOutButton";
 
 type Props = {
   session: boolean;
@@ -54,6 +55,11 @@ export function MobileNav({ session, cartCount }: Props) {
                   {session ? "My orders" : "Sign in"}
                 </Link>
               </li>
+              {session && (
+                <li>
+                  <SignOutButton className="flex w-full items-center gap-2 rounded-lg px-3 py-3 text-left text-stone-800 hover:bg-brand-light hover:text-brand" />
+                </li>
+              )}
               <li>
                 <Link href="/#visit" onClick={() => setOpen(false)} className="flex rounded-lg px-3 py-3 text-stone-800 hover:bg-brand-light hover:text-brand">
                   Find us

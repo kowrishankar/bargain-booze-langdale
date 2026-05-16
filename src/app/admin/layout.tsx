@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { signOut } from "@/lib/auth";
+import { SignOutButton } from "@/components/account/SignOutButton";
 import { Package, Tag, ClipboardList, MapPin, LayoutDashboard } from "lucide-react";
 
 const links = [
@@ -16,16 +16,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <div className="border-b border-stone-200 bg-brand text-white">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
           <p className="font-semibold">Admin — Bargain Booze Langdale</p>
-          <form
-            action={async () => {
-              "use server";
-              await signOut({ redirectTo: "/" });
-            }}
-          >
-            <button type="submit" className="text-sm font-semibold text-white/90 hover:text-white">
-              Sign out
-            </button>
-          </form>
+          <SignOutButton className="text-sm font-semibold text-white/90 hover:text-white" />
         </div>
       </div>
       <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-6 md:flex-row">
