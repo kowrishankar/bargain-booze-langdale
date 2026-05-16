@@ -50,3 +50,16 @@ export const PROMOTION_TYPE_LABELS: Record<string, string> = {
   TWO_FOR_PRICE: "2 for a set price",
   THREE_FOR_PRICE: "3 for a set price",
 };
+
+export const WELCOME_OFFER = {
+  discountPercent: 10,
+  headline: "10% off your first order",
+  description:
+    "Join Bargain Booze online — create a free account and save on your first shop. Collection or local delivery.",
+  perks: [
+    "Quick checkout with saved details",
+    "Track orders from your account",
+    "Exclusive deals & promotions",
+  ],
+  terms: "New registered customers only. One use per account on first completed order. Cannot be combined with other offers.",
+} as const;
