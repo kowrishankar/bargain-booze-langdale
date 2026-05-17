@@ -4,7 +4,7 @@ import { WELCOME_OFFER } from "@/lib/constants";
 
 export function WelcomeOfferSlide() {
   return (
-    <div className="relative h-full min-h-0 overflow-x-hidden overflow-y-auto bg-brand">
+    <section className="relative overflow-hidden border-b-4 border-brand bg-brand">
       <div
         className="pointer-events-none absolute -left-20 top-0 h-full w-1/2 skew-x-[-8deg] bg-white/10"
         aria-hidden
@@ -14,7 +14,7 @@ export function WelcomeOfferSlide() {
         aria-hidden
       />
 
-      <div className="relative z-10 mx-auto w-full max-w-6xl px-4 pb-20 pt-8 sm:px-6 sm:pb-16 sm:pt-10 lg:flex lg:min-h-full lg:items-center lg:px-4 lg:py-10">
+      <div className="relative z-10 mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 sm:py-14 lg:flex lg:items-center lg:px-4">
         <div className="flex w-full flex-col items-center gap-6 sm:gap-8 lg:grid lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:gap-10">
           <div className="order-1 w-full max-w-[min(100%,260px)] sm:max-w-[280px] lg:order-2 lg:max-w-[300px]">
             <div className="relative">
@@ -90,6 +90,6 @@ export function WelcomeOfferSlide() {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

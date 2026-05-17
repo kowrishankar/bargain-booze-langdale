@@ -5,12 +5,12 @@ import { Button } from "@/components/ui/Button";
 
 export function HeroSlide() {
   return (
-    <div className="relative h-full overflow-hidden bg-white">
+    <section className="relative overflow-hidden border-b-4 border-brand bg-white">
       <div
         className="absolute right-0 top-0 h-full w-1/3 bg-brand-light opacity-80 skew-x-[-6deg] origin-top-right translate-x-1/4"
         aria-hidden
       />
-      <div className="relative mx-auto flex h-full max-w-6xl items-center px-4 py-12 sm:py-16">
+      <div className="relative mx-auto max-w-6xl px-4 py-12 sm:py-16">
         <div className="flex w-full flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-xl">
             <p className="text-sm font-bold uppercase tracking-widest text-brand">Dunstable · Langdale Road</p>
@@ -45,6 +45,6 @@ export function HeroSlide() {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

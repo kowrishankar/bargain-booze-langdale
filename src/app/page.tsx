@@ -2,7 +2,6 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { ProductCard } from "@/components/shop/ProductCard";
 import { PromotionsSection } from "@/components/home/PromotionsSection";
-import { HomeHeroCarousel } from "@/components/home/HomeHeroCarousel";
 import { HeroSlide } from "@/components/home/HeroSlide";
 import { WelcomeOfferSlide } from "@/components/home/WelcomeOfferSlide";
 import { FeaturesSection } from "@/components/home/FeaturesSection";
@@ -37,10 +36,8 @@ export default async function HomePage() {
 
   return (
     <>
-      <HomeHeroCarousel>
-        <HeroSlide />
-        <WelcomeOfferSlide />
-      </HomeHeroCarousel>
+      <HeroSlide />
+      <WelcomeOfferSlide />
 
       <FeaturesSection />
 
